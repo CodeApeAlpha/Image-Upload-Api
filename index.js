@@ -25,10 +25,8 @@ conn.once("open", function () {
 
 
 
-app.get("/",(res,req)=>{
-    res.status(500).json({welcone:{
-        
-    }});
+app.get("/",async(res,req)=>{
+    res.status(500).json({welcone:{}});
 });
 
 
