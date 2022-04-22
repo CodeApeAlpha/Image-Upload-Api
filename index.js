@@ -23,6 +23,15 @@ conn.once("open", function () {
     gfs.collection("photos");
 });
 
+
+
+app.get("/",(res,req)=>{
+    res.status(500).json({welcone:{
+        
+    }});
+});
+
+
 // --------------------------------------------------------------------------------------------------------------------------------
 // File Upload MiddleWare Call
 app.use("/file", upload);
