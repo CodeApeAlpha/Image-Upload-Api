@@ -7,8 +7,6 @@ const express = require("express");
 const { MetaData } = require("./middleware/model/meatadata");
 
 
-
-
 // Connect to the database
 connection();
 
@@ -24,8 +22,6 @@ conn.once("open", function () {
     gfs = Grid(conn.db, mongoose.mongo);
     gfs.collection("photos");
 });
-
-
 
 // --------------------------------------------------------------------------------------------------------------------------------
 // File Upload MiddleWare Call
@@ -43,16 +39,7 @@ app.get("/file/:filename", async (req, res) => {
     }
 });
 
-// Delete file image  by filename
-// app.delete("/file/:filename", async (req, res) => {
-//     try {
-//         await gfs.files.deleteOne({ filename: req.params.filename });
-//         res.send("success");
-//     } catch (error) {
-//         console.log(error);
-//         res.send("An error occured.");
-//     }
-// });
+
 // --------------------------------------------------------------------------------------------------------------------------------
 // Get all person meataData
 app.get("/person", async (req,res)=>{
@@ -75,16 +62,14 @@ app.get("/person/:id", async (req, res)=>{
 
 // Delete Person meta data by ID
 app.delete("/person/:id", async (req,res)=>{
-
-   const person= await MetaData.findById(req.params.id).catch((err)=>{
-                    res.status(500).json({err:err})
-                });
-    await MetaData.deleteOne({_id:person.id}).catch((err)=>{
-                res.status(500).json({err:err})
-            });
-    await gfs.files.deleteOne({ filename: person.filename }).catch((err)=>{
-                res.status(500).json({err:err})
-    });
+    try{
+        const person= await MetaData.findById(req.params.id)
+        if(person===null) return res.status(404).json({metaData:"ID Not-Found"});
+        await MetaData.deleteOne({_id:person.id})
+        await gfs.files.deleteOne({ filename: person.filename })
+    }catch(err){
+        res.status(500).json({err:err})
+    }
     res.status(200).json({
         deleted:true,
         person:person
