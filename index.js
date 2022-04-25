@@ -77,13 +77,14 @@ app.delete("/person/:id", async (req,res)=>{
         if(person===null) return res.status(404).json({metaData:"ID Not-Found"});
         await MetaData.deleteOne({_id:person.id})
         await gfs.files.deleteOne({ filename: person.filename })
+        res.status(200).json({
+            deleted:true,
+            person:person
+        })
     }catch(err){
         res.status(500).json({err:err})
     }
-    res.status(200).json({
-        deleted:true,
-        person:person
-    })
+
 });
 
 
