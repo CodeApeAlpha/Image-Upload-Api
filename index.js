@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const connection = require("./db");
 const express = require("express");
 const { MetaData } = require("./middleware/model/meatadata");
-
+var cors = require('cors')
 
 // Connect to the database
 connection();
@@ -25,7 +25,7 @@ conn.once("open", function () {
 
 
 
-
+app.use(cors())
 
 
 // --------------------------------------------------------------------------------------------------------------------------------
