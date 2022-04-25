@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post("/upload", upload.single("recfile"), async (req, res) => {
     if (req.file === undefined) return res.send("you must select a file.");
-    const imgUrl = `http://localhost:8080/file/${req.file.filename}`;
+    const imgUrl = `https://polar-cove-18785.herokuapp.com/file/${req.file.filename}`;
     MetaData.create({
         first_name:req.body.first_name,
         last_name: req.body.last_name,
