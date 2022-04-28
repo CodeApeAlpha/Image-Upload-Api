@@ -1,9 +1,12 @@
 require("dotenv").config();
 const upload = require("./routes/upload");
+const faceRecognition = require("./routes/face-recognition");
+
 const Grid = require("gridfs-stream");
 const mongoose = require("mongoose");
 const connection = require("./db");
 const express = require("express");
+const fileUpload = require('express-fileupload');
 const { MetaData } = require("./middleware/model/meatadata");
 var cors = require('cors')
 
@@ -12,7 +15,6 @@ connection();
 
 // Create an instance of express
 const app = express();
-// app.use(fileUpload()); 
 // Don't forget this line!
 
 // Create an session 
@@ -31,7 +33,7 @@ app.use(cors())
 // --------------------------------------------------------------------------------------------------------------------------------
 // File Upload MiddleWare Call
 app.use("/file", upload);
-
+app.use("/retrieve",faceRecognition)
 
 // Get file image by filename
 app.get("/file/:filename", async (req, res) => {
@@ -86,6 +88,7 @@ app.delete("/person/:id", async (req,res)=>{
     }
 
 });
+
 
 
 

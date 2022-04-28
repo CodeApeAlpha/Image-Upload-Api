@@ -14,7 +14,6 @@ router.post("/upload", upload.single("recfile"), async (req, res) => {
         gender: req.body.gender,
         imagLink:imgUrl,
         fileName:`${req.file.filename}`
-
     }).then((result)=>{
         res.status(201).json(result);
     }).catch((err)=>{
